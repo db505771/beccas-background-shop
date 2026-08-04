@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Background Shop</title>
+    <style>
+        :root {
+            --text-color: #ffffff;
+        }
+
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            transition: background 0.3s ease;
+        }
+
+        body {
+            padding: 20px !important;
+            box-sizing: border-box;
+        }
+
+        /* --- PURE LIQUID GLASS REUSABLE CLASS --- */
+        .liquid-glass {
+            border-radius: 28px;
+            overflow: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.22) 0%,
+                rgba(255, 255, 255, 0.05) 45%,
+                rgba(255, 255, 255, 0.12) 100%
+            );
+            backdrop-filter: blur(25px) saturate(210%);
+            -webkit-backdrop-filter: blur(25px) saturate(210%);
+            border: none;
+            box-shadow: 
+                inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 2px 0 rgba(255, 255, 255, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* --- HEADER --- */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .points-display {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 8px;
+            opacity: 0.95;
+        }
+
+        /* --- SHOP GRID & CARDS --- */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            padding: 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .preview {
+            height: 110px;
+            border-radius: 18px;
+            margin-bottom: 14px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            margin: 5px 0;
+            font-size: 1.15rem;
+        }
+
+        .card p {
+            margin: 4px 0 16px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* --- BUTTONS --- */
+        button.liquid-glass-btn {
+            width: 100%;
+            height: 48px;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button.liquid-glass-btn:active:not(:disabled) {
+            transform: scale(0.96);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.38) 0%,
+                rgba(255, 255, 255, 0.18) 100%
+            );
+        }
+
+        button.liquid-glass-btn.equipped {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.45) 0%,
+                rgba(255, 255, 255, 0.20) 100%
+            );
+        }
+
+        button.liquid-glass-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header liquid-glass">
+        <h1>Background Shop</h1>
+        <div class="points-display">Points: <span id="user-points">0</span></div>
+    </div>
+
+    <div class="shop-grid" id="shop-container"></div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbwMk38k8KTMsSoToko73h3GqxuIROH_nDSAeZphRO-jFROFJAXVinyD5bjfuj55L_P7Dw/exec";
+
+        const shopItems = [
+            // Free Defaults
+            { id: 1, name: "Obsidian Void", cost: 0, type: "Solid", color: "#0d0d11" },
+            { id: 2, name: "Pure Snow", cost: 0, type: "Solid", color: "#f8fafc" },
+
+            // Solid Colors (250 Points)
+            { id: 3, name: "Emerald Night", cost: 250, type: "Solid", color: "#064e3b" },
+            { id: 4, name: "Dark Crimson", cost: 250, type: "Solid", color: "#4c0519" },
+            { id: 5, name: "Deep Violet", cost: 250, type: "Solid", color: "#3b0764" },
+            { id: 6, name: "Navy Abyss", cost: 250, type: "Solid", color: "#172554" },
+            { id: 7, name: "Charcoal Smoke", cost: 250, type: "Solid", color: "#18181b" },
+            { id: 8, name: "Royal Plum", cost: 250, type: "Solid", color: "#4a044e" },
+            { id: 9, name: "Electric Indigo", cost: 250, type: "Solid", color: "#312e81" },
+            { id: 10, name: "Deep Teal", cost: 250, type: "Solid", color: "#134e4a" },
+            { id: 11, name: "Spiced Amber", cost: 250, type: "Solid", color: "#78350f" },
+            { id: 12, name: "Midnight Steel", cost: 250, type: "Solid", color: "#1e293b" },
+            { id: 13, name: "Burnt Copper", cost: 250, type: "Solid", color: "#7c2d12" },
+            { id: 14, name: "Olive Shadow", cost: 250, type: "Solid", color: "#1a2e05" },
+            { id: 15, name: "Deep Carmine", cost: 250, type: "Solid", color: "#581c87" },
+            { id: 16, name: "Nordic Blue", cost: 250, type: "Solid", color: "#0f2b46" },
+            { id: 17, name: "Blood Orange", cost: 250, type: "Solid", color: "#881337" },
+            { id: 18, name: "Eucalyptus", cost: 250, type: "Solid", color: "#064e3b" },
+
+            // Gradients (750 Points)
+            { id: 19, name: "Cosmic Void", cost: 750, type: "Gradient", color: "#0f0c29", middle: "#302b63", end: "#24243e" },
+            { id: 20, name: "Cyberpunk Dark", cost: 750, type: "Gradient", color: "#0d1b2a", middle: "#1b263b", end: "#415a77" },
+            { id: 21, name: "Moody Sunset", cost: 750, type: "Gradient", color: "#2b1055", middle: "#4a154b", end: "#12002b" },
+            { id: 22, name: "Emerald Nebula", cost: 750, type: "Gradient", color: "#022c22", middle: "#065f46", end: "#021c16" },
+            { id: 23, name: "Solar Eclipse", cost: 750, type: "Gradient", color: "#180000", middle: "#4a0e0e", end: "#0a0a0a" },
+            { id: 24, name: "Deep Aurora", cost: 750, type: "Gradient", color: "#03001e", middle: "#4b0082", end: "#03001e" },
+            { id: 25, name: "Neon Matrix", cost: 750, type: "Gradient", color: "#000000", middle: "#003b00", end: "#001a00" },
+            { id: 26, name: "Midnight Rose", cost: 750, type: "Gradient", color: "#1a000d", middle: "#580028", end: "#1a000d" },
+            { id: 27, name: "Oceanic Abyss", cost: 750, type: "Gradient", color: "#001021", middle: "#002845", end: "#001021" },
+            { id: 28, name: "Amethyst Glow", cost: 750, type: "Gradient", color: "#120024", middle: "#38005b", end: "#120024" },
+            { id: 29, name: "Vaporwave Nights", cost: 750, type: "Gradient", color: "#240046", middle: "#7b2cbf", end: "#10002b" },
+            { id: 30, name: "Golden Twilight", cost: 750, type: "Gradient", color: "#2d1200", middle: "#612700", end: "#1a0a00" },
+            { id: 31, name: "Frostbite", cost: 750, type: "Gradient", color: "#031b33", middle: "#004b87", end: "#010e1a" },
+            { id: 32, name: "Magma Core", cost: 750, type: "Gradient", color: "#2b0000", middle: "#800000", end: "#140000" },
+            { id: 33, name: "Toxic Venom", cost: 750, type: "Gradient", color: "#0a1a00", middle: "#2d5a00", end: "#050d00" },
+            { id: 34, name: "Deep Space", cost: 750, type: "Gradient", color: "#000000", middle: "#111122", end: "#000000" },
+            { id: 35, name: "Siren's Call", cost: 750, type: "Gradient", color: "#001a1a", middle: "#005555", end: "#000d0d" },
+            { id: 36, name: "Royal Velvet", cost: 750, type: "Gradient", color: "#1a001a", middle: "#4a004a", end: "#0d000d" }
+        ];
+
+        let points = 0;
+        let boughtBgIds = [1, 2];
+        let equippedConfig = { type: "Solid", color: "#0d0d11", middleColor: "", endColor: "" };
+
+        function getCssBackground(item) {
+            if (item.type === "Gradient") {
+                return `linear-gradient(135deg, ${item.color}, ${item.middle}, ${item.end})`;
+            }
+            return item.color;
+        }
+
+        async function loadSheetData() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                if (data.success) {
+                    points = data.points;
+                    boughtBgIds = Array.from(new Set([1, 2, ...data.boughtIds]));
+                    equippedConfig = data.equipped;
+
+                    applyEquippedStyle(equippedConfig);
+                    updateDisplay();
+                }
+            } catch (err) {
+                console.error("Failed to fetch initial sheet data:", err);
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('user-points').innerText = points.toLocaleString();
+
+            const container = document.getElementById('shop-container');
+            container.innerHTML = '';
+
+            shopItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card liquid-glass';
+
+                const isOwned = boughtBgIds.includes(item.id);
+                const isEquipped = checkIsEquipped(item);
+
+                let buttonText = 'Buy';
+                let disabled = false;
+
+                if (isEquipped) {
+                    buttonText = 'Equipped';
+                    disabled = true;
+                } else if (isOwned) {
+                    buttonText = 'Equip';
+                } else if (points < item.cost) {
+                    buttonText = 'Not Enough Points';
+                    disabled = true;
+                }
+
+                const bgStyle = getCssBackground(item);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="preview" style="background: ${bgStyle};"></div>
+                        <h3>${item.name}</h3>
+                        <p>${item.cost === 0 ? 'Free' : item.cost.toLocaleString() + ' Points'}</p>
+                    </div>
+                    <button 
+                        class="liquid-glass liquid-glass-btn ${isEquipped ? 'equipped' : ''}" 
+                        ${disabled ? 'disabled' : ''} 
+                        onclick="handleItemAction(${item.id})">
+                        ${buttonText}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkIsEquipped(item) {
+            if (item.type !== equippedConfig.type) return false;
+            if (item.color !== equippedConfig.color) return false;
+            if (item.type === "Gradient") {
+                return (item.middle === equippedConfig.middleColor && item.end === equippedConfig.endColor);
+            }
+            return true;
+        }
+
+        function applyEquippedStyle(config) {
+            const bgStyle = (config.type === "Gradient")
+                ? `linear-gradient(135deg, ${config.color}, ${config.middleColor}, ${config.endColor})`
+                : config.color;
+
+            document.body.style.background = bgStyle;
+            localStorage.setItem('equipped_bg', bgStyle);
+        }
+
+        function handleItemAction(itemId) {
+            const item = shopItems.find(i => i.id === itemId);
+            const isOwned = boughtBgIds.includes(item.id);
+
+            // 1. Instant UI update (0ms delay)
+            if (!isOwned) {
+                if (points < item.cost) return;
+                points -= item.cost;
+                boughtBgIds.push(item.id);
+            }
+
+            equippedConfig = {
+                type: item.type,
+                color: item.color,
+                middleColor: item.middle || '',
+                endColor: item.end || ''
+            };
+
+            applyEquippedStyle(equippedConfig);
+            updateDisplay();
+
+            // 2. Background sync
+            if (!isOwned) {
+                fetch(API_URL, {
+                    method: 'POST',
+                    redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'buy', bgId: item.id, cost: item.cost })
+                }).then(() => {
+                    return sendEquipRequest(item);
+                }).catch(err => console.error("Buy background sync error:", err));
+            } else {
+                sendEquipRequest(item).catch(err => console.error("Equip background sync error:", err));
+            }
+        }
+
+        function sendEquipRequest(item) {
+            return fetch(API_URL, {
+                method: 'POST',
+                redirect: 'follow',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: 'equip',
+                    type: item.type,
+                    color: item.color,
+                    middle: item.middle || '',
+                    end: item.end || ''
+                })
+            });
+        }
+
+        loadSheetData();
+    </script>
+</body>
+</html>
