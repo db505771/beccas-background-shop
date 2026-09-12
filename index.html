@@ -1,1211 +1,991 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Background Shop</title>
+<title>Backgrounds</title>
 
-    <style>
+<style>
 
-        :root {
-            --text-color: #ffffff;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
 
-        html,
-        body {
-            margin: 0 !important;
-            padding: 0 !important;
+        width: 100%;
+        min-height: 100vh;
 
-            width: 100% !important;
-            min-height: 100vh;
+        background: transparent !important;
 
-            /*
-             * COMPLETELY TRANSPARENT
-             */
-            background: transparent !important;
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Helvetica,
-                Arial,
-                sans-serif;
+        color: #ffffff;
 
-            color: var(--text-color);
+        -webkit-tap-highlight-color: transparent;
 
-            -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
 
-            overflow-x: hidden;
-        }
-
-        body {
-            padding: 20px !important;
-        }
+    body {
+        padding: 16px !important;
+    }
 
 
-        /* =========================================
-           LIQUID GLASS
-        ========================================= */
+    /* ================================
+       CATEGORY BUTTONS
+    ================================= */
 
-        .liquid-glass {
-            border-radius: 28px;
+    .category-container {
+        display: grid;
 
-            overflow: hidden;
+        grid-template-columns: 1fr 1fr;
 
-            -webkit-mask-image:
-                -webkit-radial-gradient(white, black);
+        gap: 8px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 255, 255, 0.22) 0%,
-                    rgba(255, 255, 255, 0.05) 45%,
-                    rgba(255, 255, 255, 0.12) 100%
-                );
+        width: 100%;
+        max-width: 600px;
 
-            backdrop-filter:
-                blur(25px)
-                saturate(210%);
-
-            -webkit-backdrop-filter:
-                blur(25px)
-                saturate(210%);
-
-            border: none;
-
-            box-shadow:
-                inset 0 1.5px 2px 0
-                    rgba(255, 255, 255, 0.4),
-
-                inset 0 -1px 2px 0
-                    rgba(255, 255, 255, 0.15),
-
-                0 10px 30px
-                    rgba(0, 0, 0, 0.35);
-        }
+        margin: 0 auto 14px;
+    }
 
 
-        /* =========================================
-           HEADER
-        ========================================= */
+    .category-button {
+        height: 50px;
 
-        .header {
-            text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            margin-bottom: 30px;
+        border-radius: 28px;
 
-            padding: 24px;
+        color: #ffffff;
 
-            max-width: 600px;
+        font-size: 0.95rem;
+        font-weight: 600;
 
-            margin-left: auto;
-            margin-right: auto;
-        }
+        cursor: pointer;
 
-        .header h1 {
-            margin: 0;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,255,255,0.14),
+                rgba(255,255,255,0.07)
+            );
 
-            font-size: 1.8rem;
+        border: 1px solid rgba(255,255,255,0.08);
 
-            font-weight: 700;
+        backdrop-filter: blur(22px) saturate(180%);
+        -webkit-backdrop-filter: blur(22px) saturate(180%);
 
-            letter-spacing: -0.5px;
-        }
+        box-shadow:
+            inset 0 1px 1px rgba(255,255,255,0.10);
 
-        .points-display {
-            font-size: 1.4rem;
-
-            font-weight: 600;
-
-            margin-top: 8px;
-
-            opacity: 0.95;
-        }
+        transition:
+            transform 0.15s ease,
+            background 0.15s ease,
+            border 0.15s ease;
+    }
 
 
-        /* =========================================
-           SHOP GRID
-        ========================================= */
+    .category-button:active {
+        transform: scale(0.97);
+    }
+
+
+    .category-button.selected {
+        border: 1px solid rgba(255,255,255,0.95);
+
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,255,255,0.18),
+                rgba(255,255,255,0.09)
+            );
+
+        box-shadow:
+            inset 0 1px 1px rgba(255,255,255,0.16);
+    }
+
+
+    /* ================================
+       BACKGROUND GRID
+    ================================= */
+
+    .shop-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 8px;
+
+        width: 100%;
+        max-width: 1000px;
+
+        margin: 0 auto;
+    }
+
+
+    /* ================================
+       BACKGROUND PILL
+    ================================= */
+
+    .card {
+        width: 100%;
+        height: 52px;
+
+        padding: 5px 10px 5px 6px;
+
+        display: flex;
+        align-items: center;
+
+        border-radius: 30px;
+
+        cursor: pointer;
+
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,255,255,0.14),
+                rgba(255,255,255,0.07)
+            );
+
+        border: 1px solid rgba(255,255,255,0.08);
+
+        backdrop-filter: blur(22px) saturate(180%);
+        -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+        box-shadow:
+            inset 0 1px 1px rgba(255,255,255,0.10),
+            0 2px 8px rgba(0,0,0,0.08);
+
+        transition:
+            transform 0.15s ease,
+            background 0.15s ease,
+            border 0.15s ease;
+
+        overflow: hidden;
+    }
+
+
+    .card:active {
+        transform: scale(0.96);
+    }
+
+
+    .card.equipped {
+        border:
+            1px solid rgba(255,255,255,0.95);
+
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,255,255,0.18),
+                rgba(255,255,255,0.08)
+            );
+
+        box-shadow:
+            inset 0 1px 1px rgba(255,255,255,0.18);
+    }
+
+
+    /* ================================
+       COLOR PREVIEW
+    ================================= */
+
+    .preview {
+        flex-shrink: 0;
+
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+
+        margin-right: 8px;
+
+        border:
+            1px solid rgba(255,255,255,0.20);
+
+        box-shadow:
+            inset 0 1px 2px rgba(255,255,255,0.20),
+            inset 0 -1px 2px rgba(0,0,0,0.12);
+
+        overflow: hidden;
+    }
+
+
+    /* ================================
+       NAME
+    ================================= */
+
+    .item-name {
+        min-width: 0;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+
+    /* ================================
+       LARGER SCREENS
+    ================================= */
+
+    @media (min-width: 700px) {
 
         .shop-grid {
-            display: grid;
-
             grid-template-columns:
                 repeat(
-                    auto-fit,
-                    minmax(220px, 1fr)
+                    3,
+                    minmax(0, 1fr)
                 );
 
-            gap: 20px;
-
-            max-width: 1200px;
-
-            margin: 0 auto;
+            gap: 10px;
         }
-
-
-        /* =========================================
-           CARDS
-        ========================================= */
 
         .card {
-            padding: 18px;
-
-            text-align: center;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: space-between;
+            height: 56px;
         }
-
-
-        /* =========================================
-           PREVIEW
-        ========================================= */
 
         .preview {
-            height: 110px;
-
-            border-radius: 18px;
-
-            margin-bottom: 14px;
-
-            box-shadow:
-                inset 0 0 0 1px
-                rgba(255, 255, 255, 0.2);
+            width: 44px;
+            height: 44px;
         }
 
-
-        .card h3 {
-            margin: 5px 0;
-
-            font-size: 1.15rem;
-        }
-
-
-        .card p {
-            margin: 4px 0 16px;
-
+        .item-name {
             font-size: 0.95rem;
-
-            opacity: 0.8;
         }
+    }
 
-
-        /* =========================================
-           BUTTONS
-        ========================================= */
-
-        button.liquid-glass-btn {
-
-            width: 100%;
-
-            height: 48px;
-
-            appearance: none;
-            -webkit-appearance: none;
-
-            outline: none;
-
-            cursor: pointer;
-
-            font-size: 1rem;
-
-            font-weight: 600;
-
-            color: #ffffff;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            transition:
-                transform 0.15s ease,
-                background 0.15s ease,
-                opacity 0.2s ease;
-
-            -webkit-tap-highlight-color:
-                transparent;
-        }
-
-
-        button.liquid-glass-btn:active:not(:disabled) {
-
-            transform: scale(0.96);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 255, 255, 0.38) 0%,
-                    rgba(255, 255, 255, 0.18) 100%
-                );
-        }
-
-
-        button.liquid-glass-btn.equipped {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 255, 255, 0.45) 0%,
-                    rgba(255, 255, 255, 0.20) 100%
-                );
-        }
-
-
-        button.liquid-glass-btn:disabled {
-
-            opacity: 0.4;
-
-            cursor: not-allowed;
-
-            transform: none !important;
-        }
-
-
-        /* =========================================
-           MOBILE
-        ========================================= */
-
-        @media (max-width: 500px) {
-
-            body {
-                padding: 16px !important;
-            }
-
-            .shop-grid {
-
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-
-                gap: 10px;
-            }
-
-            .card {
-                padding: 12px;
-            }
-
-            .preview {
-                height: 85px;
-
-                border-radius: 15px;
-            }
-
-            .card h3 {
-                font-size: 0.95rem;
-            }
-
-            .card p {
-                font-size: 0.8rem;
-            }
-
-            button.liquid-glass-btn {
-                height: 44px;
-
-                font-size: 0.9rem;
-            }
-        }
-
-    </style>
+</style>
 </head>
 
 
 <body>
 
-    <div class="header liquid-glass">
 
-        <h1>Background Shop</h1>
+<!-- ================================
+     CATEGORY BUTTONS
+================================= -->
 
-        <div class="points-display">
-            Points:
-            <span id="user-points">0</span>
-        </div>
-
-    </div>
-
+<div class="category-container">
 
     <div
-        class="shop-grid"
-        id="shop-container">
+        class="category-button selected"
+        id="default-button"
+        onclick="switchCategory('Default')"
+    >
+        Default
     </div>
 
+    <div
+        class="category-button"
+        id="gradient-button"
+        onclick="switchCategory('Gradient')"
+    >
+        Gradient
+    </div>
 
-    <script>
-
-        const API_URL =
-            "https://script.google.com/macros/s/AKfycbwMk38k8KTMsSoToko73h3GqxuIROH_nDSAeZphRO-jFROFJAXVinyD5bjfuj55L_P7Dw/exec";
-
-
-        /* =========================================
-           BACKGROUNDS
-        ========================================= */
-
-        const shopItems = [
-
-            // FREE DEFAULTS
-
-            {
-                id: 1,
-                name: "Obsidian Void",
-                cost: 0,
-                type: "Solid",
-                color: "#0d0d11"
-            },
-
-            {
-                id: 2,
-                name: "Pure Snow",
-                cost: 0,
-                type: "Solid",
-                color: "#f8fafc"
-            },
+</div>
 
 
-            // SOLID COLORS
+<!-- ================================
+     BACKGROUND OPTIONS
+================================= -->
 
-            {
-                id: 3,
-                name: "Emerald Night",
-                cost: 250,
-                type: "Solid",
-                color: "#064e3b"
-            },
-
-            {
-                id: 4,
-                name: "Dark Crimson",
-                cost: 250,
-                type: "Solid",
-                color: "#4c0519"
-            },
-
-            {
-                id: 5,
-                name: "Deep Violet",
-                cost: 250,
-                type: "Solid",
-                color: "#3b0764"
-            },
-
-            {
-                id: 6,
-                name: "Navy Abyss",
-                cost: 250,
-                type: "Solid",
-                color: "#172554"
-            },
-
-            {
-                id: 7,
-                name: "Charcoal Smoke",
-                cost: 250,
-                type: "Solid",
-                color: "#18181b"
-            },
-
-            {
-                id: 8,
-                name: "Royal Plum",
-                cost: 250,
-                type: "Solid",
-                color: "#4a044e"
-            },
-
-            {
-                id: 9,
-                name: "Electric Indigo",
-                cost: 250,
-                type: "Solid",
-                color: "#312e81"
-            },
-
-            {
-                id: 10,
-                name: "Deep Teal",
-                cost: 250,
-                type: "Solid",
-                color: "#134e4a"
-            },
-
-            {
-                id: 11,
-                name: "Spiced Amber",
-                cost: 250,
-                type: "Solid",
-                color: "#78350f"
-            },
-
-            {
-                id: 12,
-                name: "Midnight Steel",
-                cost: 250,
-                type: "Solid",
-                color: "#1e293b"
-            },
-
-            {
-                id: 13,
-                name: "Burnt Copper",
-                cost: 250,
-                type: "Solid",
-                color: "#7c2d12"
-            },
-
-            {
-                id: 14,
-                name: "Olive Shadow",
-                cost: 250,
-                type: "Solid",
-                color: "#1a2e05"
-            },
-
-            {
-                id: 15,
-                name: "Deep Carmine",
-                cost: 250,
-                type: "Solid",
-                color: "#581c87"
-            },
-
-            {
-                id: 16,
-                name: "Nordic Blue",
-                cost: 250,
-                type: "Solid",
-                color: "#0f2b46"
-            },
-
-            {
-                id: 17,
-                name: "Blood Orange",
-                cost: 250,
-                type: "Solid",
-                color: "#881337"
-            },
-
-            {
-                id: 18,
-                name: "Eucalyptus",
-                cost: 250,
-                type: "Solid",
-                color: "#064e3b"
-            },
+<div
+    class="shop-grid"
+    id="shop-container"
+></div>
 
 
-            // GRADIENTS
+<script>
 
-            {
-                id: 19,
-                name: "Cosmic Void",
-                cost: 750,
-                type: "Gradient",
-                color: "#0f0c29",
-                middle: "#302b63",
-                end: "#24243e"
-            },
 
-            {
-                id: 20,
-                name: "Cyberpunk Dark",
-                cost: 750,
-                type: "Gradient",
-                color: "#0d1b2a",
-                middle: "#1b263b",
-                end: "#415a77"
-            },
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwMk38k8KTMsSoToko73h3GqxuIROH_nDSAeZphRO-jFROFJAXVinyD5bjfuj55L_P7Dw/exec";
 
-            {
-                id: 21,
-                name: "Moody Sunset",
-                cost: 750,
-                type: "Gradient",
-                color: "#2b1055",
-                middle: "#4a154b",
-                end: "#12002b"
-            },
 
-            {
-                id: 22,
-                name: "Emerald Nebula",
-                cost: 750,
-                type: "Gradient",
-                color: "#022c22",
-                middle: "#065f46",
-                end: "#021c16"
-            },
+/* ================================
+   BACKGROUNDS
+================================= */
 
-            {
-                id: 23,
-                name: "Solar Eclipse",
-                cost: 750,
-                type: "Gradient",
-                color: "#180000",
-                middle: "#4a0e0e",
-                end: "#0a0a0a"
-            },
+const shopItems = [
 
-            {
-                id: 24,
-                name: "Deep Aurora",
-                cost: 750,
-                type: "Gradient",
-                color: "#03001e",
-                middle: "#4b0082",
-                end: "#03001e"
-            },
+    /* -------- DEFAULT -------- */
 
-            {
-                id: 25,
-                name: "Neon Matrix",
-                cost: 750,
-                type: "Gradient",
-                color: "#000000",
-                middle: "#003b00",
-                end: "#001a00"
-            },
+    {
+        id: 1,
+        name: "Obsidian Void",
+        type: "Solid",
+        color: "#0d0d11"
+    },
 
-            {
-                id: 26,
-                name: "Midnight Rose",
-                cost: 750,
-                type: "Gradient",
-                color: "#1a000d",
-                middle: "#580028",
-                end: "#1a000d"
-            },
+    {
+        id: 11,
+        name: "Spiced Amber",
+        type: "Solid",
+        color: "#78350f"
+    },
 
-            {
-                id: 27,
-                name: "Oceanic Abyss",
-                cost: 750,
-                type: "Gradient",
-                color: "#001021",
-                middle: "#002845",
-                end: "#001021"
-            },
+    {
+        id: 13,
+        name: "Burnt Copper",
+        type: "Solid",
+        color: "#7c2d12"
+    },
 
-            {
-                id: 28,
-                name: "Amethyst Glow",
-                cost: 750,
-                type: "Gradient",
-                color: "#120024",
-                middle: "#38005b",
-                end: "#120024"
-            },
+    {
+        id: 17,
+        name: "Blood Orange",
+        type: "Solid",
+        color: "#881337"
+    },
 
-            {
-                id: 29,
-                name: "Vaporwave Nights",
-                cost: 750,
-                type: "Gradient",
-                color: "#240046",
-                middle: "#7b2cbf",
-                end: "#10002b"
-            },
+    {
+        id: 4,
+        name: "Dark Crimson",
+        type: "Solid",
+        color: "#4c0519"
+    },
 
-            {
-                id: 30,
-                name: "Golden Twilight",
-                cost: 750,
-                type: "Gradient",
-                color: "#2d1200",
-                middle: "#612700",
-                end: "#1a0a00"
-            },
+    {
+        id: 15,
+        name: "Deep Carmine",
+        type: "Solid",
+        color: "#581c87"
+    },
 
-            {
-                id: 31,
-                name: "Frostbite",
-                cost: 750,
-                type: "Gradient",
-                color: "#031b33",
-                middle: "#004b87",
-                end: "#010e1a"
-            },
+    {
+        id: 8,
+        name: "Royal Plum",
+        type: "Solid",
+        color: "#4a044e"
+    },
 
-            {
-                id: 32,
-                name: "Magma Core",
-                cost: 750,
-                type: "Gradient",
-                color: "#2b0000",
-                middle: "#800000",
-                end: "#140000"
-            },
+    {
+        id: 5,
+        name: "Deep Violet",
+        type: "Solid",
+        color: "#3b0764"
+    },
 
-            {
-                id: 33,
-                name: "Toxic Venom",
-                cost: 750,
-                type: "Gradient",
-                color: "#0a1a00",
-                middle: "#2d5a00",
-                end: "#050d00"
-            },
+    {
+        id: 9,
+        name: "Electric Indigo",
+        type: "Solid",
+        color: "#312e81"
+    },
 
-            {
-                id: 34,
-                name: "Deep Space",
-                cost: 750,
-                type: "Gradient",
-                color: "#000000",
-                middle: "#111122",
-                end: "#000000"
-            },
+    {
+        id: 6,
+        name: "Navy Abyss",
+        type: "Solid",
+        color: "#172554"
+    },
 
-            {
-                id: 35,
-                name: "Siren's Call",
-                cost: 750,
-                type: "Gradient",
-                color: "#001a1a",
-                middle: "#005555",
-                end: "#000d0d"
-            },
+    {
+        id: 16,
+        name: "Nordic Blue",
+        type: "Solid",
+        color: "#0f2b46"
+    },
 
-            {
-                id: 36,
-                name: "Royal Velvet",
-                cost: 750,
-                type: "Gradient",
-                color: "#1a001a",
-                middle: "#4a004a",
-                end: "#0d000d"
+    {
+        id: 12,
+        name: "Midnight Steel",
+        type: "Solid",
+        color: "#1e293b"
+    },
+
+    {
+        id: 10,
+        name: "Deep Teal",
+        type: "Solid",
+        color: "#134e4a"
+    },
+
+    {
+        id: 18,
+        name: "Eucalyptus",
+        type: "Solid",
+        color: "#064e3b"
+    },
+
+    {
+        id: 14,
+        name: "Olive Shadow",
+        type: "Solid",
+        color: "#1a2e05"
+    },
+
+    {
+        id: 7,
+        name: "Charcoal Smoke",
+        type: "Solid",
+        color: "#18181b"
+    },
+
+
+    /* -------- GRADIENTS -------- */
+
+    {
+        id: 34,
+        name: "Deep Space",
+        type: "Gradient",
+        color: "#000000",
+        middle: "#111122",
+        end: "#000000"
+    },
+
+    {
+        id: 23,
+        name: "Solar Eclipse",
+        type: "Gradient",
+        color: "#180000",
+        middle: "#4a0e0e",
+        end: "#0a0a0a"
+    },
+
+    {
+        id: 32,
+        name: "Magma Core",
+        type: "Gradient",
+        color: "#2b0000",
+        middle: "#800000",
+        end: "#140000"
+    },
+
+    {
+        id: 30,
+        name: "Golden Twilight",
+        type: "Gradient",
+        color: "#2d1200",
+        middle: "#612700",
+        end: "#1a0a00"
+    },
+
+    {
+        id: 21,
+        name: "Moody Sunset",
+        type: "Gradient",
+        color: "#2b1055",
+        middle: "#4a154b",
+        end: "#12002b"
+    },
+
+    {
+        id: 26,
+        name: "Midnight Rose",
+        type: "Gradient",
+        color: "#1a000d",
+        middle: "#580028",
+        end: "#1a000d"
+    },
+
+    {
+        id: 36,
+        name: "Royal Velvet",
+        type: "Gradient",
+        color: "#1a001a",
+        middle: "#4a004a",
+        end: "#0d000d"
+    },
+
+    {
+        id: 29,
+        name: "Vaporwave Nights",
+        type: "Gradient",
+        color: "#240046",
+        middle: "#7b2cbf",
+        end: "#10002b"
+    },
+
+    {
+        id: 28,
+        name: "Amethyst Glow",
+        type: "Gradient",
+        color: "#120024",
+        middle: "#38005b",
+        end: "#120024"
+    },
+
+    {
+        id: 24,
+        name: "Deep Aurora",
+        type: "Gradient",
+        color: "#03001e",
+        middle: "#4b0082",
+        end: "#03001e"
+    },
+
+    {
+        id: 19,
+        name: "Cosmic Void",
+        type: "Gradient",
+        color: "#0f0c29",
+        middle: "#302b63",
+        end: "#24243e"
+    },
+
+    {
+        id: 20,
+        name: "Cyberpunk Dark",
+        type: "Gradient",
+        color: "#0d1b2a",
+        middle: "#1b263b",
+        end: "#415a77"
+    },
+
+    {
+        id: 31,
+        name: "Frostbite",
+        type: "Gradient",
+        color: "#031b33",
+        middle: "#004b87",
+        end: "#010e1a"
+    },
+
+    {
+        id: 27,
+        name: "Oceanic Abyss",
+        type: "Gradient",
+        color: "#001021",
+        middle: "#002845",
+        end: "#001021"
+    },
+
+    {
+        id: 35,
+        name: "Siren's Call",
+        type: "Gradient",
+        color: "#001a1a",
+        middle: "#005555",
+        end: "#000d0d"
+    },
+
+    {
+        id: 22,
+        name: "Emerald Nebula",
+        type: "Gradient",
+        color: "#022c22",
+        middle: "#065f46",
+        end: "#021c16"
+    },
+
+    {
+        id: 33,
+        name: "Toxic Venom",
+        type: "Gradient",
+        color: "#0a1a00",
+        middle: "#2d5a00",
+        end: "#050d00"
+    },
+
+    {
+        id: 25,
+        name: "Neon Matrix",
+        type: "Gradient",
+        color: "#000000",
+        middle: "#003b00",
+        end: "#001a00"
+    }
+
+];
+
+
+/* ================================
+   STATE
+================================= */
+
+let equippedConfig = {
+    type: "Solid",
+    color: "#0d0d11",
+    middleColor: "",
+    endColor: ""
+};
+
+let currentCategory = "Default";
+
+
+/* ================================
+   CREATE CSS BACKGROUND
+================================= */
+
+function getCssBackground(item) {
+
+    if (item.type === "Gradient") {
+
+        return `
+            linear-gradient(
+                135deg,
+                ${item.color},
+                ${item.middle},
+                ${item.end}
+            )
+        `;
+
+    }
+
+    return item.color;
+}
+
+
+/* ================================
+   SWITCH CATEGORY
+================================= */
+
+function switchCategory(category) {
+
+    currentCategory = category;
+
+    document
+        .getElementById("default-button")
+        .classList.toggle(
+            "selected",
+            category === "Default"
+        );
+
+    document
+        .getElementById("gradient-button")
+        .classList.toggle(
+            "selected",
+            category === "Gradient"
+        );
+
+    updateDisplay();
+}
+
+
+/* ================================
+   CHECK EQUIPPED
+================================= */
+
+function checkIsEquipped(item) {
+
+    if (
+        item.type !==
+        equippedConfig.type
+    ) {
+        return false;
+    }
+
+    if (
+        item.color !==
+        equippedConfig.color
+    ) {
+        return false;
+    }
+
+    if (
+        item.type === "Gradient"
+    ) {
+
+        return (
+            item.middle ===
+            equippedConfig.middleColor
+            &&
+            item.end ===
+            equippedConfig.endColor
+        );
+
+    }
+
+    return true;
+}
+
+
+/* ================================
+   UPDATE DISPLAY
+================================= */
+
+function updateDisplay() {
+
+    const container =
+        document.getElementById(
+            "shop-container"
+        );
+
+    container.innerHTML = "";
+
+
+    const filteredItems =
+        shopItems.filter(item => {
+
+            if (
+                currentCategory ===
+                "Default"
+            ) {
+
+                return item.type ===
+                    "Solid";
             }
 
-        ];
+            return item.type ===
+                "Gradient";
+
+        });
 
 
-        /* =========================================
-           STATE
-        ========================================= */
+    filteredItems.forEach(item => {
 
-        let points = 0;
+        const card =
+            document.createElement(
+                "div"
+            );
 
-        let boughtBgIds = [1, 2];
 
-        let equippedConfig = {
-            type: "Solid",
-            color: "#0d0d11",
-            middleColor: "",
-            endColor: ""
+        const isEquipped =
+            checkIsEquipped(item);
+
+
+        card.className =
+            "card" +
+            (
+                isEquipped
+                    ? " equipped"
+                    : ""
+            );
+
+
+        const bgStyle =
+            getCssBackground(item);
+
+
+        card.innerHTML = `
+
+            <div
+                class="preview"
+                style="
+                    background:
+                    ${bgStyle};
+                "
+            ></div>
+
+            <div class="item-name">
+                ${item.name}
+            </div>
+
+        `;
+
+
+        card.onclick = function() {
+
+            equipBackground(item);
+
         };
 
 
-        /* =========================================
-           GET BACKGROUND
-        ========================================= */
+        container.appendChild(card);
 
-        function getCssBackground(item) {
+    });
 
-            if (item.type === "Gradient") {
+}
 
-                return `
-                    linear-gradient(
-                        135deg,
-                        ${item.color},
-                        ${item.middle},
-                        ${item.end}
-                    )
-                `;
-            }
 
-            return item.color;
-        }
+/* ================================
+   EQUIP BACKGROUND
+================================= */
 
+function equipBackground(item) {
 
-        /* =========================================
-           LOAD SHEET DATA
-        ========================================= */
+    equippedConfig = {
 
-        async function loadSheetData() {
+        type:
+            item.type,
 
-            try {
+        color:
+            item.color,
 
-                const response =
-                    await fetch(API_URL);
+        middleColor:
+            item.middle || "",
 
-                const data =
-                    await response.json();
+        endColor:
+            item.end || ""
 
+    };
 
-                if (data.success) {
 
-                    points = data.points;
+    applyEquippedStyle(
+        equippedConfig
+    );
 
-                    boughtBgIds =
-                        Array.from(
-                            new Set([
-                                1,
-                                2,
-                                ...data.boughtIds
-                            ])
-                        );
 
+    updateDisplay();
 
-                    equippedConfig =
-                        data.equipped;
 
+    sendEquipRequest(item)
+        .catch(error => {
 
-                    applyEquippedStyle(
-                        equippedConfig
-                    );
-
-
-                    updateDisplay();
-                }
-
-            } catch (err) {
-
-                console.error(
-                    "Failed to fetch initial sheet data:",
-                    err
-                );
-            }
-        }
-
-
-        /* =========================================
-           UPDATE DISPLAY
-        ========================================= */
-
-        function updateDisplay() {
-
-            document
-                .getElementById(
-                    "user-points"
-                )
-                .innerText =
-                    points.toLocaleString();
-
-
-            const container =
-                document.getElementById(
-                    "shop-container"
-                );
-
-
-            container.innerHTML = "";
-
-
-            shopItems.forEach(item => {
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                card.className =
-                    "card liquid-glass";
-
-
-                const isOwned =
-                    boughtBgIds.includes(
-                        item.id
-                    );
-
-
-                const isEquipped =
-                    checkIsEquipped(
-                        item
-                    );
-
-
-                let buttonText =
-                    "Buy";
-
-
-                let disabled =
-                    false;
-
-
-                if (isEquipped) {
-
-                    buttonText =
-                        "Equipped";
-
-                    disabled =
-                        true;
-
-                } else if (isOwned) {
-
-                    buttonText =
-                        "Equip";
-
-                } else if (
-                    points <
-                    item.cost
-                ) {
-
-                    buttonText =
-                        "Not Enough Points";
-
-                    disabled =
-                        true;
-                }
-
-
-                const bgStyle =
-                    getCssBackground(
-                        item
-                    );
-
-
-                card.innerHTML = `
-
-                    <div>
-
-                        <div
-                            class="preview"
-                            style="
-                                background:
-                                ${bgStyle};
-                            "
-                        ></div>
-
-                        <h3>
-                            ${item.name}
-                        </h3>
-
-                        <p>
-                            ${
-                                item.cost === 0
-                                ? "Free"
-                                : item.cost.toLocaleString()
-                                  + " Points"
-                            }
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        class="
-                            liquid-glass
-                            liquid-glass-btn
-                            ${
-                                isEquipped
-                                ? "equipped"
-                                : ""
-                            }
-                        "
-                        ${
-                            disabled
-                            ? "disabled"
-                            : ""
-                        }
-                        onclick="
-                            handleItemAction(
-                                ${item.id}
-                            )
-                        "
-                    >
-                        ${buttonText}
-                    </button>
-
-                `;
-
-
-                container.appendChild(
-                    card
-                );
-
-            });
-        }
-
-
-        /* =========================================
-           CHECK EQUIPPED
-        ========================================= */
-
-        function checkIsEquipped(item) {
-
-            if (
-                item.type !==
-                equippedConfig.type
-            ) {
-                return false;
-            }
-
-
-            if (
-                item.color !==
-                equippedConfig.color
-            ) {
-                return false;
-            }
-
-
-            if (
-                item.type ===
-                "Gradient"
-            ) {
-
-                return (
-                    item.middle ===
-                    equippedConfig.middleColor
-
-                    &&
-
-                    item.end ===
-                    equippedConfig.endColor
-                );
-            }
-
-
-            return true;
-        }
-
-
-        /* =========================================
-           APPLY EQUIPPED STYLE
-        ========================================= */
-
-        function applyEquippedStyle(
-            config
-        ) {
-
-            const bgStyle =
-                (
-                    config.type ===
-                    "Gradient"
-                )
-
-                ?
-
-                `linear-gradient(
-                    135deg,
-                    ${config.color},
-                    ${config.middleColor},
-                    ${config.endColor}
-                )`
-
-                :
-
-                config.color;
-
-
-            /*
-             * The component itself is transparent.
-             *
-             * The selected background is still
-             * applied to the BODY when equipped.
-             */
-
-            document.body.style.background =
-                bgStyle;
-
-
-            localStorage.setItem(
-                "equipped_bg",
-                bgStyle
+            console.error(
+                "Equip sync error:",
+                error
             );
-        }
+
+        });
+
+}
 
 
-        /* =========================================
-           BUY / EQUIP
-        ========================================= */
+/* ================================
+   APPLY EQUIPPED BACKGROUND
+================================= */
 
-        function handleItemAction(
-            itemId
+function applyEquippedStyle(config) {
+
+    let bgStyle;
+
+
+    if (
+        config.type ===
+        "Gradient"
+    ) {
+
+        bgStyle = `
+            linear-gradient(
+                135deg,
+                ${config.color},
+                ${config.middleColor},
+                ${config.endColor}
+            )
+        `;
+
+    } else {
+
+        bgStyle =
+            config.color;
+
+    }
+
+
+    document.body.style.background =
+        bgStyle;
+
+
+    localStorage.setItem(
+        "equipped_bg",
+        bgStyle
+    );
+
+}
+
+
+/* ================================
+   GOOGLE SHEETS SYNC
+================================= */
+
+function sendEquipRequest(item) {
+
+    return fetch(API_URL, {
+
+        method: "POST",
+
+        redirect: "follow",
+
+        headers: {
+            "Content-Type":
+                "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+
+            action:
+                "equip",
+
+            type:
+                item.type,
+
+            color:
+                item.color,
+
+            middle:
+                item.middle || "",
+
+            end:
+                item.end || ""
+
+        })
+
+    });
+
+}
+
+
+/* ================================
+   LOAD SAVED BACKGROUND
+================================= */
+
+async function loadSheetData() {
+
+    try {
+
+        const response =
+            await fetch(API_URL);
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success &&
+            data.equipped
         ) {
 
-            const item =
-                shopItems.find(
-                    i =>
-                        i.id ===
-                        itemId
-                );
-
-
-            const isOwned =
-                boughtBgIds.includes(
-                    item.id
-                );
-
-
-            /* ==============================
-               INSTANT UI UPDATE
-            ============================== */
-
-            if (!isOwned) {
-
-                if (
-                    points <
-                    item.cost
-                ) {
-                    return;
-                }
-
-
-                points -=
-                    item.cost;
-
-
-                boughtBgIds.push(
-                    item.id
-                );
-            }
-
-
-            equippedConfig = {
-
-                type:
-                    item.type,
-
-                color:
-                    item.color,
-
-                middleColor:
-                    item.middle || "",
-
-                endColor:
-                    item.end || ""
-            };
+            equippedConfig =
+                data.equipped;
 
 
             applyEquippedStyle(
                 equippedConfig
             );
 
-
-            updateDisplay();
-
-
-            /* ==============================
-               GOOGLE SHEETS SYNC
-            ============================== */
-
-            if (!isOwned) {
-
-                fetch(
-                    API_URL,
-                    {
-                        method: "POST",
-
-                        redirect: "follow",
-
-                        headers: {
-                            "Content-Type":
-                                "text/plain;charset=utf-8"
-                        },
-
-                        body:
-                            JSON.stringify({
-
-                                action:
-                                    "buy",
-
-                                bgId:
-                                    item.id,
-
-                                cost:
-                                    item.cost
-
-                            })
-                    }
-                )
-
-                .then(() => {
-
-                    return sendEquipRequest(
-                        item
-                    );
-
-                })
-
-                .catch(err => {
-
-                    console.error(
-                        "Buy background sync error:",
-                        err
-                    );
-
-                });
-
-            } else {
-
-                sendEquipRequest(
-                    item
-                )
-
-                .catch(err => {
-
-                    console.error(
-                        "Equip background sync error:",
-                        err
-                    );
-
-                });
-            }
         }
 
 
-        /* =========================================
-           EQUIP SYNC
-        ========================================= */
+        updateDisplay();
 
-        function sendEquipRequest(
-            item
-        ) {
+    } catch (error) {
 
-            return fetch(
-                API_URL,
-                {
-                    method: "POST",
-
-                    redirect: "follow",
-
-                    headers: {
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            action:
-                                "equip",
-
-                            type:
-                                item.type,
-
-                            color:
-                                item.color,
-
-                            middle:
-                                item.middle || "",
-
-                            end:
-                                item.end || ""
-
-                        })
-                }
-            );
-        }
+        console.error(
+            "Failed to load background:",
+            error
+        );
 
 
-        /* =========================================
-           START
-        ========================================= */
+        updateDisplay();
 
-        loadSheetData();
+    }
 
-    </script>
+}
+
+
+/* ================================
+   START
+================================= */
+
+loadSheetData();
+
+</script>
 
 </body>
 </html>
