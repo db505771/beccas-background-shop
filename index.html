@@ -1,291 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>Backgrounds</title>
 
 <style>
 
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    html,
-    body {
-        margin: 0 !important;
-        padding: 0 !important;
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
 
-        width: 100%;
-        min-height: 100vh;
+    width: 100%;
+    min-height: 100vh;
 
-        background: transparent !important;
+    background: transparent !important;
 
-        font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            Roboto,
-            Helvetica,
-            Arial,
-            sans-serif;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
 
-        color: #ffffff;
+    color: #ffffff;
 
-        -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
 
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
+    overflow-x: hidden;
+}
 
-    body {
-        padding: 16px !important;
-    }
+/* SCROLLING ENABLED */
+body {
+    padding: 16px !important;
 
+    overflow-y: auto !important;
 
-    /* ================================
-       CATEGORY BUTTONS
-    ================================= */
-
-    .category-container {
-        display: grid;
-
-        grid-template-columns: 1fr 1fr;
-
-        gap: 8px;
-
-        width: 100%;
-        max-width: 600px;
-
-        margin: 0 auto 14px;
-    }
+    -webkit-overflow-scrolling: touch;
+}
 
 
-    .category-button {
-        height: 50px;
+/* =====================================
+   CATEGORY BUTTONS
+===================================== */
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.category-container {
 
-        border-radius: 28px;
+    display: grid;
 
-        color: #ffffff;
+    grid-template-columns: 1fr 1fr;
 
-        font-size: 0.95rem;
-        font-weight: 600;
+    gap: 8px;
 
-        cursor: pointer;
+    width: 100%;
+    max-width: 600px;
 
-        background:
-            linear-gradient(
-                180deg,
-                rgba(255,255,255,0.14),
-                rgba(255,255,255,0.07)
-            );
-
-        border: 1px solid rgba(255,255,255,0.08);
-
-        backdrop-filter: blur(22px) saturate(180%);
-        -webkit-backdrop-filter: blur(22px) saturate(180%);
-
-        box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.10);
-
-        transition:
-            transform 0.15s ease,
-            background 0.15s ease,
-            border 0.15s ease;
-    }
+    margin: 0 auto 14px;
+}
 
 
-    .category-button:active {
-        transform: scale(0.97);
-    }
+.category-button {
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 28px;
+
+    color: #ffffff;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.14),
+            rgba(255,255,255,0.07)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:
+        blur(22px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(180%);
+
+    box-shadow:
+        inset 0 1px 1px
+        rgba(255,255,255,0.10);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border 0.15s ease;
+}
 
 
-    .category-button.selected {
-        border: 1px solid rgba(255,255,255,0.95);
+.category-button:active {
 
-        background:
-            linear-gradient(
-                180deg,
-                rgba(255,255,255,0.18),
-                rgba(255,255,255,0.09)
-            );
+    transform: scale(0.97);
 
-        box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.16);
-    }
+}
 
 
-    /* ================================
-       BACKGROUND GRID
-    ================================= */
+.category-button.selected {
+
+    border:
+        1px solid
+        rgba(255,255,255,0.95);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.18),
+            rgba(255,255,255,0.09)
+        );
+
+    box-shadow:
+        inset 0 1px 1px
+        rgba(255,255,255,0.16);
+}
+
+
+/* =====================================
+   BACKGROUND GRID
+===================================== */
+
+.shop-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 8px;
+
+    width: 100%;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding-bottom: 20px;
+}
+
+
+/* =====================================
+   BACKGROUND PILL
+===================================== */
+
+.card {
+
+    width: 100%;
+
+    min-height: 52px;
+
+    padding:
+        5px
+        10px
+        5px
+        6px;
+
+    display: flex;
+
+    align-items: center;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.14),
+            rgba(255,255,255,0.07)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:
+        blur(22px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(180%);
+
+    box-shadow:
+        inset 0 1px 1px
+        rgba(255,255,255,0.10),
+
+        0 2px 8px
+        rgba(0,0,0,0.08);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border 0.15s ease;
+
+    overflow: hidden;
+}
+
+
+.card:active {
+
+    transform: scale(0.96);
+
+}
+
+
+/* =====================================
+   EQUIPPED
+===================================== */
+
+.card.equipped {
+
+    border:
+        1px solid
+        rgba(255,255,255,0.95);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.18),
+            rgba(255,255,255,0.08)
+        );
+
+    box-shadow:
+        inset 0 1px 1px
+        rgba(255,255,255,0.18);
+}
+
+
+/* =====================================
+   PREVIEW
+===================================== */
+
+.preview {
+
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    margin-right: 8px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.20);
+
+    box-shadow:
+
+        inset 0 1px 2px
+        rgba(255,255,255,0.20),
+
+        inset 0 -1px 2px
+        rgba(0,0,0,0.12);
+
+    overflow: hidden;
+}
+
+
+/* =====================================
+   NAME
+===================================== */
+
+.item-name {
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+}
+
+
+/* =====================================
+   LARGER SCREENS
+===================================== */
+
+@media (min-width: 700px) {
 
     .shop-grid {
-        display: grid;
 
         grid-template-columns:
             repeat(
-                2,
+                3,
                 minmax(0, 1fr)
             );
 
-        gap: 8px;
-
-        width: 100%;
-        max-width: 1000px;
-
-        margin: 0 auto;
+        gap: 10px;
     }
 
-
-    /* ================================
-       BACKGROUND PILL
-    ================================= */
 
     .card {
-        width: 100%;
-        height: 52px;
 
-        padding: 5px 10px 5px 6px;
-
-        display: flex;
-        align-items: center;
-
-        border-radius: 30px;
-
-        cursor: pointer;
-
-        background:
-            linear-gradient(
-                180deg,
-                rgba(255,255,255,0.14),
-                rgba(255,255,255,0.07)
-            );
-
-        border: 1px solid rgba(255,255,255,0.08);
-
-        backdrop-filter: blur(22px) saturate(180%);
-        -webkit-backdrop-filter: blur(22px) saturate(180%);
-
-        box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.10),
-            0 2px 8px rgba(0,0,0,0.08);
-
-        transition:
-            transform 0.15s ease,
-            background 0.15s ease,
-            border 0.15s ease;
-
-        overflow: hidden;
+        min-height: 56px;
     }
 
-
-    .card:active {
-        transform: scale(0.96);
-    }
-
-
-    .card.equipped {
-        border:
-            1px solid rgba(255,255,255,0.95);
-
-        background:
-            linear-gradient(
-                180deg,
-                rgba(255,255,255,0.18),
-                rgba(255,255,255,0.08)
-            );
-
-        box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.18);
-    }
-
-
-    /* ================================
-       COLOR PREVIEW
-    ================================= */
 
     .preview {
-        flex-shrink: 0;
 
-        width: 40px;
-        height: 40px;
-
-        border-radius: 50%;
-
-        margin-right: 8px;
-
-        border:
-            1px solid rgba(255,255,255,0.20);
-
-        box-shadow:
-            inset 0 1px 2px rgba(255,255,255,0.20),
-            inset 0 -1px 2px rgba(0,0,0,0.12);
-
-        overflow: hidden;
+        width: 44px;
+        height: 44px;
     }
 
-
-    /* ================================
-       NAME
-    ================================= */
 
     .item-name {
-        min-width: 0;
 
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        font-size: 0.85rem;
-        font-weight: 600;
+        font-size: 0.95rem;
     }
 
-
-    /* ================================
-       LARGER SCREENS
-    ================================= */
-
-    @media (min-width: 700px) {
-
-        .shop-grid {
-            grid-template-columns:
-                repeat(
-                    3,
-                    minmax(0, 1fr)
-                );
-
-            gap: 10px;
-        }
-
-        .card {
-            height: 56px;
-        }
-
-        .preview {
-            width: 44px;
-            height: 44px;
-        }
-
-        .item-name {
-            font-size: 0.95rem;
-        }
-    }
+}
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- ================================
+<!-- =====================================
      CATEGORY BUTTONS
-================================= -->
+===================================== -->
 
 <div class="category-container">
 
@@ -296,6 +370,7 @@
     >
         Default
     </div>
+
 
     <div
         class="category-button"
@@ -308,9 +383,9 @@
 </div>
 
 
-<!-- ================================
-     BACKGROUND OPTIONS
-================================= -->
+<!-- =====================================
+     BACKGROUNDS
+===================================== -->
 
 <div
     class="shop-grid"
@@ -325,13 +400,15 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbwMk38k8KTMsSoToko73h3GqxuIROH_nDSAeZphRO-jFROFJAXVinyD5bjfuj55L_P7Dw/exec";
 
 
-/* ================================
+/* =====================================
    BACKGROUNDS
-================================= */
+===================================== */
 
 const shopItems = [
 
-    /* -------- DEFAULT -------- */
+    /* =================================
+       DEFAULT
+    ================================= */
 
     {
         id: 1,
@@ -446,7 +523,9 @@ const shopItems = [
     },
 
 
-    /* -------- GRADIENTS -------- */
+    /* =================================
+       GRADIENTS
+    ================================= */
 
     {
         id: 34,
@@ -613,27 +692,35 @@ const shopItems = [
 ];
 
 
-/* ================================
+/* =====================================
    STATE
-================================= */
+===================================== */
 
 let equippedConfig = {
+
     type: "Solid",
+
     color: "#0d0d11",
+
     middleColor: "",
+
     endColor: ""
+
 };
+
 
 let currentCategory = "Default";
 
 
-/* ================================
-   CREATE CSS BACKGROUND
-================================= */
+/* =====================================
+   BACKGROUND CSS
+===================================== */
 
 function getCssBackground(item) {
 
-    if (item.type === "Gradient") {
+    if (
+        item.type === "Gradient"
+    ) {
 
         return `
             linear-gradient(
@@ -647,16 +734,18 @@ function getCssBackground(item) {
     }
 
     return item.color;
+
 }
 
 
-/* ================================
-   SWITCH CATEGORY
-================================= */
+/* =====================================
+   CATEGORY
+===================================== */
 
 function switchCategory(category) {
 
     currentCategory = category;
+
 
     document
         .getElementById("default-button")
@@ -665,6 +754,7 @@ function switchCategory(category) {
             category === "Default"
         );
 
+
     document
         .getElementById("gradient-button")
         .classList.toggle(
@@ -672,13 +762,15 @@ function switchCategory(category) {
             category === "Gradient"
         );
 
+
     updateDisplay();
+
 }
 
 
-/* ================================
+/* =====================================
    CHECK EQUIPPED
-================================= */
+===================================== */
 
 function checkIsEquipped(item) {
 
@@ -686,37 +778,49 @@ function checkIsEquipped(item) {
         item.type !==
         equippedConfig.type
     ) {
+
         return false;
+
     }
+
 
     if (
         item.color !==
         equippedConfig.color
     ) {
+
         return false;
+
     }
+
 
     if (
         item.type === "Gradient"
     ) {
 
         return (
+
             item.middle ===
             equippedConfig.middleColor
+
             &&
+
             item.end ===
             equippedConfig.endColor
+
         );
 
     }
 
+
     return true;
+
 }
 
 
-/* ================================
-   UPDATE DISPLAY
-================================= */
+/* =====================================
+   DISPLAY
+===================================== */
 
 function updateDisplay() {
 
@@ -724,6 +828,7 @@ function updateDisplay() {
         document.getElementById(
             "shop-container"
         );
+
 
     container.innerHTML = "";
 
@@ -736,12 +841,18 @@ function updateDisplay() {
                 "Default"
             ) {
 
-                return item.type ===
-                    "Solid";
+                return (
+                    item.type ===
+                    "Solid"
+                );
+
             }
 
-            return item.type ===
-                "Gradient";
+
+            return (
+                item.type ===
+                "Gradient"
+            );
 
         });
 
@@ -788,11 +899,12 @@ function updateDisplay() {
         `;
 
 
-        card.onclick = function() {
+        card.onclick =
+            function() {
 
-            equipBackground(item);
+                equipBackground(item);
 
-        };
+            };
 
 
         container.appendChild(card);
@@ -802,9 +914,9 @@ function updateDisplay() {
 }
 
 
-/* ================================
-   EQUIP BACKGROUND
-================================= */
+/* =====================================
+   EQUIP
+===================================== */
 
 function equipBackground(item) {
 
@@ -846,9 +958,9 @@ function equipBackground(item) {
 }
 
 
-/* ================================
-   APPLY EQUIPPED BACKGROUND
-================================= */
+/* =====================================
+   APPLY BACKGROUND
+===================================== */
 
 function applyEquippedStyle(config) {
 
@@ -889,50 +1001,56 @@ function applyEquippedStyle(config) {
 }
 
 
-/* ================================
-   GOOGLE SHEETS SYNC
-================================= */
+/* =====================================
+   GOOGLE SHEETS
+===================================== */
 
 function sendEquipRequest(item) {
 
-    return fetch(API_URL, {
+    return fetch(
+        API_URL,
+        {
 
-        method: "POST",
+            method: "POST",
 
-        redirect: "follow",
+            redirect: "follow",
 
-        headers: {
-            "Content-Type":
-                "text/plain;charset=utf-8"
-        },
+            headers: {
 
-        body: JSON.stringify({
+                "Content-Type":
+                    "text/plain;charset=utf-8"
 
-            action:
-                "equip",
+            },
 
-            type:
-                item.type,
+            body:
+                JSON.stringify({
 
-            color:
-                item.color,
+                    action:
+                        "equip",
 
-            middle:
-                item.middle || "",
+                    type:
+                        item.type,
 
-            end:
-                item.end || ""
+                    color:
+                        item.color,
 
-        })
+                    middle:
+                        item.middle || "",
 
-    });
+                    end:
+                        item.end || ""
+
+                })
+
+        }
+    );
 
 }
 
 
-/* ================================
+/* =====================================
    LOAD SAVED BACKGROUND
-================================= */
+===================================== */
 
 async function loadSheetData() {
 
@@ -964,6 +1082,7 @@ async function loadSheetData() {
 
         updateDisplay();
 
+
     } catch (error) {
 
         console.error(
@@ -979,9 +1098,9 @@ async function loadSheetData() {
 }
 
 
-/* ================================
+/* =====================================
    START
-================================= */
+===================================== */
 
 loadSheetData();
 
